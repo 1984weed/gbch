@@ -32,7 +32,7 @@ func exists(filename string) bool {
 // Run the ghch
 func (gb *Gbch) Run() error {
 	ctx := context.Background()
-	if err := gb.initialize(ctx); err != nil {
+	if err := gb.Initialize(ctx); err != nil {
 		return err
 	}
 	if gb.All {
@@ -43,10 +43,10 @@ func (gb *Gbch) Run() error {
 
 func (gb *Gbch) runAll(ctx context.Context) error {
 	chlog := Changelog{}
-	vers := append(gb.versions(), "")
+	vers := append(gb.Versions(), "")
 	prevRev := ""
 	for _, rev := range vers {
-		r, err := gb.getSection(ctx, rev, prevRev)
+		r, err := gb.GetSection(ctx, rev, prevRev)
 		if err != nil {
 			return err
 		}
@@ -90,7 +90,7 @@ func (gb *Gbch) runAll(ctx context.Context) error {
 
 func (gb *Gbch) run(ctx context.Context) error {
 	if gb.Latest {
-		vers := gb.versions()
+		vers := gb.Versions()
 		if len(vers) > 0 {
 			gb.To = vers[0]
 		}
@@ -100,7 +100,7 @@ func (gb *Gbch) run(ctx context.Context) error {
 	} else if gb.From == "" && gb.To == "" {
 		gb.From = gb.getLatestSemverTag()
 	}
-	r, err := gb.getSection(ctx, gb.From, gb.To)
+	r, err := gb.GetSection(ctx, gb.From, gb.To)
 	if err != nil {
 		return err
 	}
@@ -149,7 +149,7 @@ func (gb *Gbch) run(ctx context.Context) error {
 	return nil
 }
 
-func (gb *Gbch) initialize(ctx context.Context) error {
+func (gb *Gbch) Initialize(ctx context.Context) error {
 	if gb.Write {
 		if !gb.isMDFormat() {
 			gb.Format = "markdown"
@@ -210,7 +210,7 @@ func (gb *Gbch) cmd(argv ...string) (string, error) {
 	return b.String(), err
 }
 
-func (gb *Gbch) versions() []string {
+func (gb *Gbch) Versions() []string {
 	sv := gitsemvers.Semvers{
 		RepoPath:  gb.RepoPath,
 		GitPath:   gb.GitPath,
@@ -361,7 +361,7 @@ func (gb *Gbch) mergedPRs(ctx context.Context, from, to string) (prs []*backlog.
 }
 
 func (gb *Gbch) getLatestSemverTag() string {
-	vers := gb.versions()
+	vers := gb.Versions()
 	if len(vers) < 1 {
 		return ""
 	}

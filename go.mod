@@ -1,4 +1,4 @@
-module github.com/vvatanabe/gbch
+module github.com/trknhr/gbch
 
 go 1.16
 

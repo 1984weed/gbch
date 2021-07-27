@@ -99,7 +99,7 @@ func (rs Section) toBacklog() (string, error) {
 	return b.String(), nil
 }
 
-func (gb *Gbch) getSection(ctx context.Context, from, to string) (Section, error) {
+func (gb *Gbch) GetSection(ctx context.Context, from, to string) (Section, error) {
 	if from == "" {
 		from, _ = gb.cmd("rev-list", "--max-parents=0", "HEAD")
 		from = strings.TrimSpace(from)

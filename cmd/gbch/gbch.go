@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/vvatanabe/gbch"
+	"github.com/trknhr/gbch"
 )
 
 func main() {
