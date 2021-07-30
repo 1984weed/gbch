@@ -376,7 +376,7 @@ type mergedPRLog struct {
 func (gb *Gbch) mergedPRLogs(from, to string) (nums []*mergedPRLog, err error) {
 	revisionRange := fmt.Sprintf("%s..%s", from, to)
 
-	argv := []string{"log", revisionRange, "--merges", "--full-history", "--oneline", "--"}
+	argv := []string{"log", revisionRange, "--merges", "--full-history", "--simplify-merges", "--oneline", "--"}
 	argv = append(argv, gb.TargetPaths...)
 
 	out, err := gb.cmd(argv...)
